@@ -20,7 +20,7 @@ const HomeSideBlock = styled.div`
         `
       : css`
           transition: right 1s;
-          right: -180%;
+          right: -300%;
         `}
 `;
 

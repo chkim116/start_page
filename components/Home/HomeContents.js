@@ -22,7 +22,7 @@ const MainBlock = styled.main`
     props.move
       ? css`
           transition: left 1s;
-          left: -180%;
+          left: -300%;
         `
       : css`
           transition: left 1s;
@@ -89,6 +89,11 @@ export const HomeContents = ({ getDate }) => {
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
+      if (bookmark.name === "" || bookmark.url === "") {
+        return alert("입력해주세요");
+      }
+      console.log(bookmark);
+
       setBookmarkList(bookmarkList.concat({ ...bookmark }));
       setModalOn(false);
     },
@@ -130,6 +135,18 @@ export const HomeContents = ({ getDate }) => {
     !edit ? setEdit(true) : setEdit(false);
   };
 
+  // target_blank 설정
+
+  const [blank, setBlank] = useState(false);
+
+  const onChecked = useCallback(
+    (e) => {
+      const { checked } = e.target;
+      checked ? setBlank(true) : setBlank(false);
+    },
+    [blank]
+  );
+
   return (
     <>
       <MainBlock move={move}>
@@ -145,6 +162,8 @@ export const HomeContents = ({ getDate }) => {
           onEdit={onEdit}
           bookmarkList={bookmarkList}
           onDel={onDel}
+          blank={blank}
+          onChecked={onChecked}
         />
 
         {/* 추가 하기 */}
