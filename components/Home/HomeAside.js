@@ -7,11 +7,8 @@ const AsideBlock = styled.aside`
   top: 0;
   right: 0;
   left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background: rgba(0, 0, 0, 0.5);
-  display: none;
+  display: ${(props) => (props.modalOn ? "block" : "none")};
 
   .modal__form {
     position: relative;
@@ -20,19 +17,20 @@ const AsideBlock = styled.aside`
     text-align: center;
     justify-content: center;
     width: 500px;
+    margin: 0 auto;
     height: 500px;
 
     .modal-close {
       position: absolute;
       color: white;
-      top: -50px;
-      right: 0;
+      top: 100px;
+      right: 50px;
       cursor: pointer;
       font-size: 32px;
     }
 
     .modal__form-input {
-      width: 380px;
+      width: 300px;
       padding: 0.5em;
       text-align: center;
       margin: 0.5em auto;
@@ -48,20 +46,40 @@ const AsideBlock = styled.aside`
   }
 `;
 
-export const HomeAside = () => {
+export const HomeAside = ({
+  bookmark,
+  onModal,
+  modalOn,
+  onChange,
+  onSubmit,
+}) => {
   return (
-    <AsideBlock>
-      <form className='modal__form'>
-        <div className='modal-close'>X</div>
+    <AsideBlock modalOn={modalOn}>
+      <form className='modal__form' onSubmit={onSubmit}>
+        <div className='modal-close' onClick={onModal}>
+          X
+        </div>
         <input
           className='modal__form-input'
+          name='name'
           type='text'
           placeholder='저장할 이름'
+          value={bookmark.name}
+          onChange={onChange}
         />
-        <input className='modal__form-input' type='text' placeholder='URL' />
+        <input
+          className='modal__form-input'
+          name='url'
+          type='text'
+          placeholder='URL'
+          value={bookmark.url}
+          onChange={onChange}
+        />
         <div className='modal__form-btn'>
           <button type='submit'>확인</button>
-          <button type='button'>취소</button>
+          <button type='button' onClick={onModal}>
+            취소
+          </button>
         </div>
       </form>
     </AsideBlock>

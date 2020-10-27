@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 import { HomeAside } from "./HomeAside";
 import { HomeBookMark } from "./HomeBookMark";
@@ -41,20 +41,35 @@ const LeftMove = styled.div`
   left: 2.5%;
 `;
 
-export const HomeContents = () => {
-  const [getDate, setGetDate] = useState(0);
+export const HomeContents = ({ getDate }) => {
+  const [modalOn, setModalOn] = useState(false);
+  const [bookmark, setBookmark] = useState({ name: "", url: "" });
 
-  function getTime() {
-    const date = new Date();
-    const time = date.toLocaleTimeString();
-    setGetDate(time);
-  }
+  const onModal = useCallback(() => {
+    !modalOn ? setModalOn(true) : setModalOn(false);
+    if (!modalOn) {
+      setBookmark({ name: "", url: "" });
+    }
+  }, [modalOn]);
 
-  setInterval(getTime, 1000);
+  const onChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
+      setBookmark({ ...bookmark, [name]: value });
+    },
+    [bookmark]
+  );
 
-  if (getDate === 0) {
-    return <div>로딩...</div>;
-  }
+  const [bookmarkList, setBookmarkList] = useState([]);
+
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      setBookmarkList(bookmarkList.concat(bookmark));
+      setModalOn(false);
+    },
+    [bookmark]
+  );
 
   return (
     <>
@@ -66,13 +81,13 @@ export const HomeContents = () => {
         <HomeSearch />
 
         {/* 북마크 현황 */}
-        <HomeBookMark />
+        <HomeBookMark bookmarkList={bookmarkList} />
 
         {/* 추가 하기 */}
         <ClickBlock>
           <div>원하는 사이트를 추가하고 삭제해 보세요!</div>
           <div>눌러서 추가하기 </div>
-          <button className='modal-btn' type='button'>
+          <button className='modal-btn' type='button' onClick={onModal}>
             +
           </button>
         </ClickBlock>
@@ -84,7 +99,13 @@ export const HomeContents = () => {
         </LeftMove>
       </MainBlock>
       {/* 모달 */}
-      <HomeAside />
+      <HomeAside
+        bookmark={bookmark}
+        modalOn={modalOn}
+        onModal={onModal}
+        onChange={onChange}
+        onSubmit={onSubmit}
+      />
     </>
   );
 };
