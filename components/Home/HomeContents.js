@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import { BookMarkLink } from "./BookMarkLink";
 import { HomeAside } from "./HomeAside";
 import { HomeBookMark } from "./HomeBookMark";
 import { HomeSearch } from "./HomeSearch";
+import { HomeSide } from "./HomeSideContents";
 
 const MainBlock = styled.main`
   margin: 0 auto;
@@ -22,7 +22,7 @@ const MainBlock = styled.main`
     props.move
       ? css`
           transition: left 1s;
-          left: -200%;
+          left: -180%;
         `
       : css`
           transition: left 1s;
@@ -55,6 +55,7 @@ const LeftMove = styled.div`
   cursor: pointer;
   font-size: 24px;
   top: 50%;
+  z-index: 55;
   ${(props) =>
     props.move
       ? css`
@@ -165,9 +166,14 @@ export const HomeContents = ({ getDate }) => {
       />
       <LeftMove move={move}>
         {/* 왼쪽으로 누르면 오른쪽으로 나오게 만들기 */}
-        <div onClick={onMove}>왼쪽으로</div>
+        {move ? (
+          <div onClick={onMove}>오른쪽으로</div>
+        ) : (
+          <div onClick={onMove}>왼쪽으로</div>
+        )}
         {/* 뉴스 뷰어 api */}
       </LeftMove>
+      <HomeSide move={move} />
     </>
   );
 };
