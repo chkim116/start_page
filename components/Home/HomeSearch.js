@@ -5,6 +5,8 @@ import { searchText } from "../../modules/search";
 
 const MainSearchBlock = styled.div`
   margin: 3em 0;
+  text-align: center;
+
   .main__search {
     .search-select {
       padding: 0.8em;
@@ -37,7 +39,6 @@ export const HomeSearch = () => {
   const onChange = (e) => {
     const { name, value } = e.target;
     setText({ ...text, [name]: value });
-    console.log(text);
   };
 
   const onSubmit = (e) => {

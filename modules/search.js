@@ -1,6 +1,5 @@
 const SEARCHTEXT = "search/SEARCHTEXT";
 const BOOKMARK = "search/BOOKMARK";
-const ADD_BOOKMARK = "search/ADD_BOOKMARK";
 
 export const bookMark = (url) => ({
   type: BOOKMARK,

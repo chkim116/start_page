@@ -1,21 +1,35 @@
-import React, { useCallback, useState } from "react";
-import styled from "styled-components";
+import React, { useCallback, useEffect, useState } from "react";
+import styled, { css } from "styled-components";
+import { BookMarkLink } from "./BookMarkLink";
 import { HomeAside } from "./HomeAside";
 import { HomeBookMark } from "./HomeBookMark";
 import { HomeSearch } from "./HomeSearch";
 
 const MainBlock = styled.main`
-  max-width: 1000px;
   margin: 0 auto;
   height: 100vh;
   overflow: hidden;
+  position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
   align-items: center;
+  ${(props) =>
+    props.move
+      ? css`
+          transition: left 1s;
+          left: -200%;
+        `
+      : css`
+          transition: left 1s;
+          left: 0%;
+        `}
 
   .date {
-    width: 800px;
     margin: 0 auto;
     text-align: center;
     font-size: 90px;
@@ -38,12 +52,24 @@ const ClickBlock = styled.div`
 
 const LeftMove = styled.div`
   position: absolute;
-  left: 2.5%;
+  cursor: pointer;
+  font-size: 24px;
+  top: 50%;
+  ${(props) =>
+    props.move
+      ? css`
+          right: 2%;
+        `
+      : css`
+          left: 2%;
+        `}
 `;
 
 export const HomeContents = ({ getDate }) => {
   const [modalOn, setModalOn] = useState(false);
   const [bookmark, setBookmark] = useState({ name: "", url: "" });
+  const [bookmarkList, setBookmarkList] = useState([]);
+  const getLocal = localStorage.getItem("list");
 
   const onModal = useCallback(() => {
     !modalOn ? setModalOn(true) : setModalOn(false);
@@ -55,25 +81,57 @@ export const HomeContents = ({ getDate }) => {
   const onChange = useCallback(
     (e) => {
       const { name, value } = e.target;
-      setBookmark({ ...bookmark, [name]: value });
+      setBookmark({ ...bookmark, [name]: value, id: Date.now() });
     },
     [bookmark]
   );
-
-  const [bookmarkList, setBookmarkList] = useState([]);
-
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      setBookmarkList(bookmarkList.concat(bookmark));
+      setBookmarkList(bookmarkList.concat({ ...bookmark }));
       setModalOn(false);
     },
     [bookmark]
   );
 
+  const onDel = useCallback((e) => {
+    const { id } = e.target.dataset;
+    setBookmarkList(
+      bookmarkList.filter((list) => {
+        return list.id !== parseInt(id);
+      })
+    );
+  });
+
+  useEffect(() => {
+    if (getLocal) {
+      if (getLocal.length > 2) {
+        setBookmarkList(JSON.parse(getLocal));
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("list", JSON.stringify(bookmarkList));
+  }, [bookmarkList]);
+
+  const [move, setMove] = useState(false);
+
+  const onMove = useCallback(() => {
+    !move ? setMove(true) : setMove(false);
+  }, [move]);
+
+  // edit btn
+
+  const [edit, setEdit] = useState(false);
+
+  const onEdit = () => {
+    !edit ? setEdit(true) : setEdit(false);
+  };
+
   return (
     <>
-      <MainBlock>
+      <MainBlock move={move}>
         {/* 시간 */}
         <div className='date'>{getDate}</div>
 
@@ -81,7 +139,12 @@ export const HomeContents = ({ getDate }) => {
         <HomeSearch />
 
         {/* 북마크 현황 */}
-        <HomeBookMark bookmarkList={bookmarkList} />
+        <HomeBookMark
+          edit={edit}
+          onEdit={onEdit}
+          bookmarkList={bookmarkList}
+          onDel={onDel}
+        />
 
         {/* 추가 하기 */}
         <ClickBlock>
@@ -91,12 +154,6 @@ export const HomeContents = ({ getDate }) => {
             +
           </button>
         </ClickBlock>
-
-        <LeftMove>
-          {/* 왼쪽으로 누르면 오른쪽으로 나오게 만들기 */}
-          <div>왼쪽으로</div>
-          {/* 뉴스 뷰어 api */}
-        </LeftMove>
       </MainBlock>
       {/* 모달 */}
       <HomeAside
@@ -106,6 +163,11 @@ export const HomeContents = ({ getDate }) => {
         onChange={onChange}
         onSubmit={onSubmit}
       />
+      <LeftMove move={move}>
+        {/* 왼쪽으로 누르면 오른쪽으로 나오게 만들기 */}
+        <div onClick={onMove}>왼쪽으로</div>
+        {/* 뉴스 뷰어 api */}
+      </LeftMove>
     </>
   );
 };
