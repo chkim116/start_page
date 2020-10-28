@@ -4,10 +4,6 @@ import { BookMarkLink } from "./BookMarkLink";
 const BookMarkBlock = styled.div`
   display: flex;
   flex-direction: column;
-  .bookmark-title {
-    font-size: 24px;
-    text-align: center;
-  }
 
   .bookmark {
     display: flex;
@@ -20,10 +16,13 @@ const BookMarkBlock = styled.div`
 
     .del-btn {
       position: relative;
-      top: -110px;
+      top: -120px;
       cursor: pointer;
       transtion: opacity 500ms;
       visibility: ${(props) => (props.edit ? "visible" : "hidden")};
+      &:hover {
+        color: #333333;
+      }
     }
   }
 
@@ -39,7 +38,8 @@ const BookMarkBlock = styled.div`
       margin-top: 1em;
       margin-right: 1em;
       padding: 0.5em;
-      background: ${(props) => props.edit && "black"};
+      background: ${(props) => props.edit && "#d63031"};
+      border-radius: 12px;
     }
     .checkbox {
       margin-top: 1em;
@@ -53,8 +53,9 @@ const BookMarkBlock = styled.div`
       .check-label {
         border: 1px solid black;
         cursor: pointer;
+        border-radius: 12px;
         padding: 0.5em;
-        background: ${(props) => props.blank && "black"};
+        background: ${(props) => props.blank && "#7a6ccf;"};
       }
     }
   }
@@ -70,23 +71,6 @@ export const HomeBookMark = ({
 }) => {
   return (
     <BookMarkBlock edit={edit} blank={blank}>
-      <div className='bookmark-title'>북마크</div>
-      <div className='bookmark__util'>
-        <div className='bookmark-edit' onClick={onEdit}>
-          EDIT
-        </div>
-        <div className='checkbox'>
-          <input
-            onClick={onChecked}
-            className='check'
-            type='checkbox'
-            id='target'
-          />
-          <label className='check-label' htmlFor='target'>
-            새 창으로 열기
-          </label>
-        </div>
-      </div>
       <div className='bookmark'>
         {bookmarkList !== [] &&
           bookmarkList.map((list) => (
@@ -102,6 +86,22 @@ export const HomeBookMark = ({
               </span>
             </div>
           ))}
+      </div>
+      <div className='bookmark__util'>
+        <div className='bookmark-edit' onClick={onEdit}>
+          DEL
+        </div>
+        <div className='checkbox'>
+          <input
+            onClick={onChecked}
+            className='check'
+            type='checkbox'
+            id='target'
+          />
+          <label className='check-label' htmlFor='target'>
+            새 창으로 열기
+          </label>
+        </div>
       </div>
     </BookMarkBlock>
   );

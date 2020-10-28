@@ -18,6 +18,10 @@ const MainBlock = styled.main`
   right: 0;
   bottom: 0;
   align-items: center;
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   ${(props) =>
     props.move
       ? css`
@@ -43,19 +47,28 @@ const ClickBlock = styled.div`
   line-height: 45px;
 
   .modal-btn {
-    all: unset;
     cursor: pointer;
     font-size: 24px;
     font-weight: bold;
+    width: 50px;
+    height: 50px;
+    &:hover {
+      background: #fdfdfd;
+      transition: all 300ms;
+      color: #333333;
+
+      border-radius: 33px;
+    }
   }
 `;
 
 const LeftMove = styled.div`
   position: absolute;
   cursor: pointer;
-  font-size: 24px;
+  font-size: 20px;
   top: 50%;
   z-index: 55;
+
   ${(props) =>
     props.move
       ? css`
@@ -92,8 +105,6 @@ export const HomeContents = ({ getDate }) => {
       if (bookmark.name === "" || bookmark.url === "") {
         return alert("입력해주세요");
       }
-      console.log(bookmark);
-
       setBookmarkList(bookmarkList.concat({ ...bookmark }));
       setModalOn(false);
     },
@@ -156,6 +167,14 @@ export const HomeContents = ({ getDate }) => {
         {/* 검색창 */}
         <HomeSearch />
 
+        {/* 추가 하기 */}
+        <ClickBlock>
+          <h3>원하는 사이트를 추가하고 삭제해 보세요!</h3>
+          <button className='modal-btn' type='button' onClick={onModal}>
+            +
+          </button>
+        </ClickBlock>
+
         {/* 북마크 현황 */}
         <HomeBookMark
           edit={edit}
@@ -165,16 +184,8 @@ export const HomeContents = ({ getDate }) => {
           blank={blank}
           onChecked={onChecked}
         />
-
-        {/* 추가 하기 */}
-        <ClickBlock>
-          <div>원하는 사이트를 추가하고 삭제해 보세요!</div>
-          <div>눌러서 추가하기 </div>
-          <button className='modal-btn' type='button' onClick={onModal}>
-            +
-          </button>
-        </ClickBlock>
       </MainBlock>
+
       {/* 모달 */}
       <HomeAside
         bookmark={bookmark}
@@ -183,15 +194,17 @@ export const HomeContents = ({ getDate }) => {
         onChange={onChange}
         onSubmit={onSubmit}
       />
+
+      {/* 슬라이더 이동 */}
       <LeftMove move={move}>
-        {/* 왼쪽으로 누르면 오른쪽으로 나오게 만들기 */}
         {move ? (
-          <div onClick={onMove}>오른쪽으로</div>
+          <div onClick={onMove}>검색하기</div>
         ) : (
-          <div onClick={onMove}>왼쪽으로</div>
+          <div onClick={onMove}>오늘 할일</div>
         )}
-        {/* 뉴스 뷰어 api */}
       </LeftMove>
+
+      {/* 두번째 화면 */}
       <HomeSide move={move} />
     </>
   );

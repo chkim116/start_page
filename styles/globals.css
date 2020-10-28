@@ -2,11 +2,19 @@ html,
 body {
   padding: 0;
   margin: 0;
-  background: #333333;
+  background: url("../image/bgImg.jpg") no-repeat;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
   color: #fdfdfd;
 }
 
 button {
   all: unset;
   cursor: pointer;
+}
+
+input {
+  outline: none;
+  border: none;
 }

@@ -1,21 +1,13 @@
 const SEARCHTEXT = "search/SEARCHTEXT";
-const BOOKMARK = "search/BOOKMARK";
 
-export const bookMark = (url) => ({
-  type: BOOKMARK,
-  payload: { url },
-});
-
-export const searchText = (url) => ({
+export const searchText = (url, color) => ({
   type: SEARCHTEXT,
-  payload: { url },
+  payload: { url, color },
 });
 
 function search(state = {}, action) {
   switch (action.type) {
     case SEARCHTEXT:
-      return { ...state, url: action.payload.url };
-    case BOOKMARK:
       return { ...state, url: action.payload.url };
     default:
       return state;

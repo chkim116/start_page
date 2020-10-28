@@ -2,25 +2,40 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { searchText } from "../../modules/search";
+import { AiOutlineSearch } from "react-icons/ai";
 
 const MainSearchBlock = styled.div`
   margin: 3em 0;
   text-align: center;
 
   .main__search {
+    position: relative;
+    display: flex;
+    align-items: center;
     .search-select {
       padding: 0.8em;
+      font-size: 18px;
+      width: 130px;
       cursor: pointer;
+      border-top-left-radius: 12px;
+      border-bottom-left-radius: 12px;
+      outline: none;
+      height: 52px;
     }
     .search-text {
       padding: 0.8em;
-      width: 340px;
+      width: 560px;
+      border-top-right-radius: 12px;
+      border-bottom-right-radius: 12px;
+      font-size: 18px;
     }
     .search-btn {
-      all: unset;
+      position: absolute;
       cursor: pointer;
-      color: white;
-      padding: 0.8em;
+      right: 5px;
+      color: black;
+      z-index: 3;
+      top: 12px;
     }
   }
 `;
@@ -43,21 +58,20 @@ export const HomeSearch = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (text.select === "naver") {
+    text.select === "naver" &&
       dispatch(
         searchText(
           `https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query=${text.query}`
         )
       );
-    }
-    if (text.select === "google") {
+    text.select === "google" &&
       dispatch(searchText(`https://www.google.co.kr/search?q=${text.query}`));
-    }
-    if (text.select === "daum") {
+
+    text.select === "daum" &&
       dispatch(
         searchText(`https://search.daum.net/search?w=tot&q=${text.query}`)
       );
-    }
+
     setLoading(true);
   };
 
@@ -82,7 +96,7 @@ export const HomeSearch = () => {
           placeholder='검색하세요...'
         />
         <button className='search-btn' type='submit'>
-          search
+          <AiOutlineSearch size={28} />
         </button>
       </form>
     </MainSearchBlock>

@@ -26,6 +26,13 @@ const HomeSideBlock = styled.div`
 
 export const HomeSide = ({ move }) => {
   return (
-    <HomeSideBlock move={move}>dwqwqwqwqwqwqwqwqwqwqwqwqwqwqgg</HomeSideBlock>
+    <HomeSideBlock move={move}>
+      <div>뭐하실래요?</div>
+      <div>눌러서 오늘 할일 적기</div>
+      <form>
+        <input type='text' placeholder='오늘 할일은?' />
+        <button type='submit'>등록</button>
+      </form>
+    </HomeSideBlock>
   );
 };

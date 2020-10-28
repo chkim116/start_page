@@ -6,7 +6,7 @@ const BookmarkLinkBlock = styled.div`
   .bookmark-box {
     height: 60px;
     width: 60px;
-    border: 1px solid #fdfdfd;
+    border: 4px solid rgb(123, 124, 129);
     border-radius: 33px;
     text-align: center;
     cursor: pointer;
@@ -15,9 +15,12 @@ const BookmarkLinkBlock = styled.div`
   }
 
   .bookmark-icons {
-    font-size: 24px;
+    font-size: 20px;
     text-decoration: none;
-    color: white;
+    color: #fdfdfd;
+    &:hover {
+      color: rgb(123, 124, 129);
+    }
   }
 `;
 
