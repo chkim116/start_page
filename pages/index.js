@@ -9,6 +9,7 @@ export default function Home() {
     temp: "",
   });
   const [weatherData, setWeatherData] = useState();
+  const [loading, setLoading] = useState(false);
   function getTime() {
     const date = new Date();
     const time = date.toLocaleTimeString();
@@ -27,11 +28,11 @@ export default function Home() {
       longitude: longitude,
     };
     localStorage.setItem("coords", JSON.stringify(coordsObj));
+    setLoading(true);
   }
 
   function handleGeoError(err) {
     console.log("can't access");
-    console.log(err);
   }
 
   useEffect(() => {
@@ -53,7 +54,7 @@ export default function Home() {
       };
       getWeather(latitude, longitude);
     }
-  }, []);
+  }, [loading]);
 
   useEffect(() => {
     if (weatherData) {

@@ -22,14 +22,22 @@ const BookmarkLinkBlock = styled.div`
   }
 `;
 
+const LinkBtn = styled.a`
+  padding: 1em;
+  border-radius: 33px;
+  z-index: 5;
+`;
+
 export const BookMarkLink = ({ blank, link, icon, name }) => {
   return (
     <BookmarkLinkBlock>
       <div className='bookmark-box'>
-        <Link href={link}>
-          <a target={blank ? "blank" : undefined} className='bookmark-icons'>
+        <Link href={link} passHref>
+          <LinkBtn
+            target={blank ? "_blank" : undefined}
+            className='bookmark-icons'>
             {icon}
-          </a>
+          </LinkBtn>
         </Link>
       </div>
       <div>{name}</div>
