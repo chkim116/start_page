@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { searchText } from "../../modules/search";
+import { searchInput, searchText } from "../../modules/search";
 import { AiOutlineSearch } from "react-icons/ai";
 
 const MainSearchBlock = styled.div`
@@ -41,37 +41,32 @@ const MainSearchBlock = styled.div`
 `;
 
 export const HomeSearch = () => {
-  const dispatch = useDispatch();
-  const [text, setText] = useState({
-    select: "naver",
-    query: "",
-  });
   const [loading, setLoading] = useState(false);
 
+  const dispatch = useDispatch();
   const search = useSelector((state) => state.search);
   const { url } = search;
 
   const onChange = (e) => {
     const { name, value } = e.target;
-    setText({ ...text, [name]: value });
+    dispatch(searchInput({ ...search, [name]: value }));
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    text.select === "naver" &&
+    search.select === "naver" &&
       dispatch(
         searchText(
-          `https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query=${text.query}`
+          `https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query=${search.query}`
         )
       );
-    text.select === "google" &&
-      dispatch(searchText(`https://www.google.co.kr/search?q=${text.query}`));
+    search.select === "google" &&
+      dispatch(searchText(`https://www.google.co.kr/search?q=${search.query}`));
 
-    text.select === "daum" &&
+    search.select === "daum" &&
       dispatch(
-        searchText(`https://search.daum.net/search?w=tot&q=${text.query}`)
+        searchText(`https://search.daum.net/search?w=tot&q=${search.query}`)
       );
-
     setLoading(true);
   };
 

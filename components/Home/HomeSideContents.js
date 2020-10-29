@@ -1,4 +1,8 @@
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled, { css } from "styled-components";
+import { setTodoList } from "../../modules/todolist";
+import { HomeToDoList } from "./HomeToDoList";
 
 const HomeSideBlock = styled.div`
   width: 100%;
@@ -8,8 +12,7 @@ const HomeSideBlock = styled.div`
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  top: 0;
+  top: 30%;
   bottom: 0;
   align-items: center;
   ${(props) =>
@@ -25,14 +28,53 @@ const HomeSideBlock = styled.div`
 `;
 
 export const HomeSide = ({ move }) => {
+  const dispatch = useDispatch();
+  const todos = useSelector((state) => state.todolist);
+  const [showList, setShowList] = useState([]);
+
+  const onChange = useCallback((e) => {
+    const { value } = e.target;
+    dispatch(setTodoList(value));
+  }, []);
+
+  const onSubmit = useCallback((e) => {
+    e.preventDefault();
+    if (todos.todo === "") {
+      return alert("입력해주세요~");
+    }
+    setShowList(showList.concat(todos));
+    dispatch(setTodoList(""));
+  });
+
+  const onDel = useCallback((e) => {
+    const { id } = e.target.dataset;
+    setShowList(showList.filter((todos) => todos.id !== parseInt(id)));
+  });
+
+  useEffect(() => {
+    if (showList.length >= 0) {
+      localStorage.setItem("todolist", JSON.stringify(showList));
+    }
+  }, [showList]);
+
+  useEffect(() => {
+    const getLocal = localStorage.getItem("todolist");
+    if (getLocal) {
+      if (getLocal.length > 2) {
+        setShowList(showList.concat(JSON.parse(getLocal)));
+      }
+    }
+  }, []);
+
   return (
     <HomeSideBlock move={move}>
-      <div>뭐하실래요?</div>
-      <div>눌러서 오늘 할일 적기</div>
-      <form>
-        <input type='text' placeholder='오늘 할일은?' />
-        <button type='submit'>등록</button>
-      </form>
+      <HomeToDoList
+        onSubmit={onSubmit}
+        showList={showList}
+        onDel={onDel}
+        onChange={onChange}
+        todos={todos}
+      />
     </HomeSideBlock>
   );
 };

@@ -80,10 +80,8 @@ const LeftMove = styled.div`
 `;
 
 export const HomeContents = ({ getDate }) => {
+  //  모달 관리
   const [modalOn, setModalOn] = useState(false);
-  const [bookmark, setBookmark] = useState({ name: "", url: "" });
-  const [bookmarkList, setBookmarkList] = useState([]);
-  const getLocal = localStorage.getItem("list");
 
   const onModal = useCallback(() => {
     !modalOn ? setModalOn(true) : setModalOn(false);
@@ -92,6 +90,11 @@ export const HomeContents = ({ getDate }) => {
     }
   }, [modalOn]);
 
+  // 로컬스토리지를 활용한 url 북마크
+  const [bookmark, setBookmark] = useState({ name: "", url: "" });
+  const [bookmarkList, setBookmarkList] = useState([]);
+  const getLocal = localStorage.getItem("list");
+
   const onChange = useCallback(
     (e) => {
       const { name, value } = e.target;
@@ -99,6 +102,7 @@ export const HomeContents = ({ getDate }) => {
     },
     [bookmark]
   );
+
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
@@ -132,6 +136,7 @@ export const HomeContents = ({ getDate }) => {
     localStorage.setItem("list", JSON.stringify(bookmarkList));
   }, [bookmarkList]);
 
+  // 왼쪽, 오른쪽 무빙
   const [move, setMove] = useState(false);
 
   const onMove = useCallback(() => {
@@ -198,9 +203,9 @@ export const HomeContents = ({ getDate }) => {
       {/* 슬라이더 이동 */}
       <LeftMove move={move}>
         {move ? (
-          <div onClick={onMove}>검색하기</div>
+          <div onClick={onMove}>searching</div>
         ) : (
-          <div onClick={onMove}>오늘 할일</div>
+          <div onClick={onMove}>todolist</div>
         )}
       </LeftMove>
 
