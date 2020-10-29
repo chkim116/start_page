@@ -10,14 +10,10 @@ const MainBlock = styled.main`
   height: 100vh;
   overflow: hidden;
   position: fixed;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   left: 0;
   top: 0;
   right: 0;
   bottom: 0;
-  align-items: center;
   overflow: scroll;
   &::-webkit-scrollbar {
     display: none;
@@ -44,11 +40,9 @@ const MainBlock = styled.main`
 
 const ClickBlock = styled.div`
   text-align: center;
-  line-height: 45px;
-
   .modal-btn {
     cursor: pointer;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
     width: 50px;
     height: 50px;
@@ -56,7 +50,6 @@ const ClickBlock = styled.div`
       background: #fdfdfd;
       transition: all 300ms;
       color: #333333;
-
       border-radius: 33px;
     }
   }
@@ -68,6 +61,15 @@ const LeftMove = styled.div`
   font-size: 20px;
   top: 50%;
   z-index: 55;
+  animation: blink 1s ease-in-out infinite alternate;
+  @keyframes blink {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 
   ${(props) =>
     props.move

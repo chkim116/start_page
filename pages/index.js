@@ -21,7 +21,7 @@ export default function Home() {
     <div>
       <Head>
         <title>StarterPage</title>
-        <link rel='icon' href='/favicon.ico' />
+        <link rel='icon' href='/favicon.png' />
       </Head>
       <HomeContents getDate={getDate} />
     </div>

@@ -12,22 +12,22 @@ const MainSearchBlock = styled.div`
     position: relative;
     display: flex;
     align-items: center;
+    justify-content: center;
     .search-select {
-      padding: 0.8em;
-      font-size: 18px;
+      padding: 1em;
       width: 130px;
       cursor: pointer;
       border-top-left-radius: 12px;
       border-bottom-left-radius: 12px;
       outline: none;
-      height: 52px;
     }
     .search-text {
-      padding: 0.8em;
+      padding: 0 1em;
+      box-shadow: inset 0 2px 4px 0 hsla(0, 0%, 0%, 0.08);
       width: 560px;
+      height: 45px;
       border-top-right-radius: 12px;
       border-bottom-right-radius: 12px;
-      font-size: 18px;
     }
     .search-btn {
       position: absolute;
@@ -35,7 +35,7 @@ const MainSearchBlock = styled.div`
       right: 5px;
       color: black;
       z-index: 3;
-      top: 12px;
+      top: 10px;
     }
   }
 `;
@@ -91,7 +91,7 @@ export const HomeSearch = () => {
           placeholder='검색하세요...'
         />
         <button className='search-btn' type='submit'>
-          <AiOutlineSearch size={28} />
+          <AiOutlineSearch size={24} />
         </button>
       </form>
     </MainSearchBlock>

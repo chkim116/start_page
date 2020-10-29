@@ -19,15 +19,10 @@ const AsideBlock = styled.aside`
     width: 500px;
     margin: 0 auto;
     height: 500px;
-
-    .modal-close {
-      position: absolute;
-      color: white;
-      top: 100px;
-      right: 50px;
-      cursor: pointer;
-      font-size: 32px;
-    }
+    border: 1px solid #fdfdfd;
+    top: 10%;
+    border-radius: 33px;
+    background: rgba(0, 0, 0, 0.5);
 
     .modal__form-input {
       width: 300px;
@@ -40,7 +35,8 @@ const AsideBlock = styled.aside`
       button {
         margin: 1em;
         padding: 0.5em;
-        background: black;
+        font-size: 14px;
+        background: #333333;
       }
     }
   }
@@ -56,9 +52,6 @@ export const HomeAside = ({
   return (
     <AsideBlock modalOn={modalOn}>
       <form className='modal__form' onSubmit={onSubmit}>
-        <div className='modal-close' onClick={onModal}>
-          X
-        </div>
         <input
           className='modal__form-input'
           name='name'

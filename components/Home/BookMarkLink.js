@@ -2,9 +2,7 @@ import styled from "styled-components";
 import Link from "next/link";
 
 const BookmarkLinkBlock = styled.div`
-  margin-bottom: 1em;
   .bookmark-box {
-    height: 60px;
     width: 60px;
     border: 4px solid rgb(123, 124, 129);
     border-radius: 33px;
