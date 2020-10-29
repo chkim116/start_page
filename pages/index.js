@@ -19,19 +19,6 @@ export default function Home() {
 
   const API_KEY = "5f2a84c0efe337ed3aa921a02476140c";
 
-  const getWeather = async (lat, long) => {
-    await Axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${API_KEY}&units=metric
-    `
-    )
-      .then((res) => res.data)
-      .then((data) => setWeatherData(data));
-    setLocationWeather({
-      place: weatherData.name,
-      temp: Math.floor(weatherData.main.temp),
-    });
-  };
-
   function handleGeoSucces(position) {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
@@ -40,7 +27,6 @@ export default function Home() {
       longitude: longitude,
     };
     localStorage.setItem("coords", JSON.stringify(coordsObj));
-    getWeather(latitude, longitude);
   }
 
   function handleGeoError(err) {
@@ -57,9 +43,26 @@ export default function Home() {
       );
     } else {
       const { latitude, longitude } = JSON.parse(weather);
+      const getWeather = async (lat, long) => {
+        await Axios.get(
+          `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${API_KEY}&units=metric
+          `
+        )
+          .then((res) => res.data)
+          .then((data) => setWeatherData(data));
+      };
       getWeather(latitude, longitude);
     }
   }, []);
+
+  useEffect(() => {
+    if (weatherData) {
+      setLocationWeather({
+        place: weatherData.name,
+        temp: Math.floor(weatherData.main.temp),
+      });
+    }
+  }, [weatherData]);
 
   if (getDate === 0) {
     return <div>로딩...</div>;
