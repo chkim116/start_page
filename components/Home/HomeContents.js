@@ -7,6 +7,7 @@ import { HomeSide } from "./HomeSideContents";
 
 const MainBlock = styled.main`
   margin: 0 auto;
+  margin-top: 2em;
   height: 100vh;
   overflow: hidden;
   position: fixed;

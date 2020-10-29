@@ -13,16 +13,16 @@ const MainSearchBlock = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    max-width: 700px;
+    margin: 0 auto;
     .search-select {
-      padding: 1em;
-      width: 130px;
+      width: 100px;
       cursor: pointer;
       border-top-left-radius: 12px;
       border-bottom-left-radius: 12px;
-      outline: none;
+      height: 49px;
     }
     .search-text {
-      padding: 0 1em;
       box-shadow: inset 0 2px 4px 0 hsla(0, 0%, 0%, 0.08);
       width: 560px;
       height: 45px;
@@ -32,7 +32,7 @@ const MainSearchBlock = styled.div`
     .search-btn {
       position: absolute;
       cursor: pointer;
-      right: 5px;
+      right: 20px;
       color: black;
       z-index: 3;
       top: 10px;
