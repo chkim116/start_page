@@ -1,30 +1,20 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Starter Page
 
-## Getting Started
+스타터 페이지는 네이버 웨일 브라우저나, 엣지 등 브라우저의 메인 페이지를 본따 만들어졌습니다.
 
-First, run the development server:
+[열기](https://starte.netlify.app/)
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## why?
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+검색창을 자주 사용하는 검색 엔진으로 최적화시켜 접근을 용이하게 만들고 <br>
+할 일도 손쉽게 체크할 수 있는 복합적인 페이지를 만들고 싶었음.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## what?
 
-## Learn More
+옵션을 바꿀 때마다 URL을 바꿔 검색하게 만들고, <br>
+로컬스토리지를 이용해서 투두리스트와 북마크를 보관하도록 한다.
 
-To learn more about Next.js, take a look at the following resources:
+## how?
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Next JS로 빌드한 프로젝트가 없고, SSR에 대한 호기심이 들어 Next JS를 활용하기로 결정 <br>
+styled-components와 hook&redux 사용
